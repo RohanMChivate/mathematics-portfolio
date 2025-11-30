@@ -1,0 +1,928 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Introduction to Calculus - Mathematics Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      width: 100%;
+      min-height: 100vh;
+      overflow-x: hidden;
+      background: #0a0a0a;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Ensure proper display in iframe */
+    html {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .app-wrapper {
+      width: 100%;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+
+    /* Navigation */
+    nav {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 1rem 0;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav-brand {
+      font-size: 1.5rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .nav-menu {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-link {
+      color: #333;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
+      cursor: pointer;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+    }
+
+    .nav-link:hover {
+      color: #667eea;
+      background: rgba(102, 126, 234, 0.1);
+    }
+
+    .nav-link.active {
+      color: #667eea;
+      background: rgba(102, 126, 234, 0.15);
+    }
+
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #333;
+    }
+
+    /* Hero Section */
+    .hero-section {
+      width: 100%;
+      min-height: 600px;
+      background: #1a1a1a;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 3rem 2rem;
+      color: white;
+      overflow: hidden;
+    }
+
+    .hero-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+      background-size: 30px 30px;
+      z-index: 1;
+    }
+
+    .chalkboard-equations {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 2;
+      font-family: 'Courier New', monospace;
+      color: rgba(255, 255, 255, 0.15);
+      font-size: 1.2rem;
+      pointer-events: none;
+    }
+
+    .equation {
+      position: absolute;
+      white-space: nowrap;
+    }
+
+    .eq1 { top: 10%; left: 5%; font-size: 1.4rem; }
+    .eq2 { top: 15%; right: 8%; font-size: 1.1rem; }
+    .eq3 { top: 35%; left: 10%; font-size: 1.3rem; }
+    .eq4 { top: 40%; right: 12%; font-size: 1.2rem; }
+    .eq5 { top: 60%; left: 8%; font-size: 1.1rem; }
+    .eq6 { top: 70%; right: 10%; font-size: 1.3rem; }
+    .eq7 { top: 25%; left: 50%; transform: translateX(-50%); font-size: 1.2rem; }
+    .eq8 { bottom: 10%; left: 15%; font-size: 1.1rem; }
+    .eq9 { bottom: 15%; right: 15%; font-size: 1.2rem; }
+
+    .hero-content {
+      max-width: 800px;
+      position: relative;
+      z-index: 3;
+    }
+
+    .profile-photo-container {
+      width: 180px;
+      height: 180px;
+      margin: 0 auto 2rem;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border: 4px solid rgba(255, 255, 255, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4rem;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+
+    .hero-content h1 {
+      font-size: 3.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .hero-content h2 {
+      font-size: 1.8rem;
+      font-weight: 400;
+      margin-bottom: 2rem;
+      opacity: 0.95;
+    }
+
+    .hero-content p {
+      font-size: 1.2rem;
+      line-height: 1.8;
+      opacity: 0.95;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* Page Container */
+    .page-container {
+      display: none;
+    }
+
+    .page-container.active {
+      display: block;
+    }
+
+    /* Section Styles */
+    .section {
+      width: 100%;
+      padding: 5rem 2rem;
+      background: #1a1a1a;
+      position: relative;
+    }
+
+    .section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+      background-size: 30px 30px;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .section > * {
+      position: relative;
+      z-index: 2;
+    }
+
+    .section-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 3rem;
+      color: #ffffff;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    /* About Me Section */
+    .about-content {
+      display: flex;
+      gap: 3rem;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      padding: 3rem;
+      border-radius: 20px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .about-photo {
+      flex-shrink: 0;
+      width: 250px;
+      height: 250px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 6rem;
+      color: white;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      border: 2px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .about-text {
+      flex: 1;
+    }
+
+    .about-text p {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      color: rgba(255, 255, 255, 0.9);
+      text-align: justify;
+    }
+
+    /* Impression Section */
+    .impression-content {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      padding: 3rem;
+      border-radius: 20px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .impression-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .impression-card {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2rem;
+      border-radius: 15px;
+      border-left: 4px solid rgba(255, 255, 255, 0.4);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .impression-card h3 {
+      font-size: 1.3rem;
+      color: rgba(255, 255, 255, 0.95);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .impression-card p {
+      font-size: 1rem;
+      line-height: 1.7;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .math-icon {
+      font-size: 1.5rem;
+    }
+
+    /* Lab Assessments */
+    .lab-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 2rem;
+    }
+
+    .lab-card {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border-radius: 15px;
+      padding: 2rem;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .lab-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .lab-card h3 {
+      font-size: 1.5rem;
+      color: rgba(255, 255, 255, 0.95);
+      margin-bottom: 1rem;
+    }
+
+    .lab-card p {
+      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.7);
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+
+    .upload-area {
+      border: 2px dashed rgba(255, 255, 255, 0.3);
+      border-radius: 10px;
+      padding: 2rem;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.05);
+      transition: background 0.3s ease, border-color 0.3s ease;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .upload-area:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.4);
+    }
+
+    .upload-area p {
+      color: rgba(255, 255, 255, 0.8);
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+    }
+
+    .file-input {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      opacity: 0;
+      cursor: pointer;
+      z-index: 10;
+    }
+
+    .uploaded-files {
+      margin-top: 1rem;
+      display: none;
+    }
+
+    .uploaded-files.has-files {
+      display: block;
+    }
+
+    .file-item {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .file-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .file-info {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .file-name {
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 0.9rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .file-size {
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 0.8rem;
+    }
+
+    .file-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .file-btn {
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      color: white;
+      padding: 0.4rem 0.8rem;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      transition: background 0.3s ease;
+    }
+
+    .file-btn:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    .file-btn.remove {
+      background: rgba(255, 0, 0, 0.3);
+    }
+
+    .file-btn.remove:hover {
+      background: rgba(255, 0, 0, 0.5);
+    }
+
+    .upload-icon {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    /* Footer */
+    footer {
+      background: #0d0d0d;
+      color: white;
+      text-align: center;
+      padding: 2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    footer p {
+      font-size: 1rem;
+      opacity: 0.8;
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 768px) {
+      .nav-menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: white;
+        flex-direction: column;
+        padding: 1rem 0;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        gap: 0;
+      }
+
+      .nav-menu.active {
+        display: flex;
+      }
+
+      .nav-link {
+        padding: 1rem 2rem;
+        border-radius: 0;
+      }
+
+      .menu-toggle {
+        display: block;
+      }
+
+      .hero-content h1 {
+        font-size: 2rem;
+      }
+
+      .hero-content h2 {
+        font-size: 1.3rem;
+      }
+
+      .hero-content p {
+        font-size: 1rem;
+      }
+
+      .about-content {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .about-photo {
+        width: 200px;
+        height: 200px;
+      }
+
+      .about-text p {
+        text-align: left;
+      }
+
+      .section {
+        padding: 3rem 1.5rem;
+      }
+
+      .section-title {
+        font-size: 2rem;
+      }
+
+      .impression-content {
+        padding: 2rem 1.5rem;
+      }
+
+      .lab-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+ </head>
+ <body>
+  <div class="app-wrapper">
+   <!-- Navigation -->
+   <nav>
+    <div class="nav-container">
+     <div class="nav-brand">
+      Calculus Portfolio
+     </div>
+     <button class="menu-toggle" id="menuToggle">☰</button>
+     <ul class="nav-menu" id="navMenu">
+      <li><a class="nav-link active" data-page="home">Home</a></li>
+      <li><a class="nav-link" data-page="about">About Me</a></li>
+      <li><a class="nav-link" data-page="impression">My Impression</a></li>
+      <li><a class="nav-link" data-page="lab">Lab Assessments</a></li>
+     </ul>
+    </div>
+   </nav>
+
+   <!-- Home Page -->
+   <div class="page-container active" id="homePage">
+    <section class="hero-section">
+     <div class="chalkboard-equations">
+      <div class="equation eq1">∫ f(x)dx = F(x) + C</div>
+      <div class="equation eq2">lim(x→0) (sin x)/x = 1</div>
+      <div class="equation eq3">d/dx[x²] = 2x</div>
+      <div class="equation eq4">∫₀¹ x² dx = 1/3</div>
+      <div class="equation eq5">f'(x) = lim(h→0) [f(x+h) - f(x)]/h</div>
+      <div class="equation eq6">∫ eˣ dx = eˣ + C</div>
+      <div class="equation eq7">∫ (1/x) dx = ln|x| + C</div>
+      <div class="equation eq8">d/dx[sin x] = cos x</div>
+      <div class="equation eq9">∫ cos x dx = sin x + C</div>
+     </div>
+     <div class="hero-content">
+      <div class="profile-photo-container">
+       📸
+      </div>
+      <h1 id="mainTitle">INTRODUCTION TO CALCULUS</h1>
+      <h2 id="subtitle">Mathematics Portfolio</h2>
+      <p id="introText">This portfolio highlights my learning journey, reflections, and lab work from the course Introduction to Calculus.</p>
+     </div>
+    </section>
+   </div>
+
+   <!-- About Me Page -->
+   <div class="page-container" id="aboutPage">
+    <section class="section">
+     <div class="section-container">
+      <h2 class="section-title" id="sectionTitleAbout">About Me</h2>
+      <div class="about-content">
+       <div class="about-photo">
+        👤
+       </div>
+       <div class="about-text">
+        <p id="aboutParagraph">As a first-year engineering student, I find myself deeply fascinated by the elegance of mathematics and the power of analytical thinking. Problem-solving isn't just an academic requirement for me—it's a passion that drives my curiosity every day. I'm constantly drawn to understanding how complex systems work, whether it's unraveling mathematical proofs or exploring emerging technologies. Outside of academics, I enjoy activities that challenge my logic and creativity, from strategic games to coding projects that require focused attention to detail. This natural inclination toward systematic thinking has made calculus particularly appealing to me, as it provides the foundational tools to model and solve real-world engineering challenges. I believe that the intersection of creativity and analytical rigor is where true innovation happens, and I'm excited to continue developing these skills throughout my engineering journey.</p>
+       </div>
+      </div>
+     </div>
+    </section>
+   </div>
+
+   <!-- Impression Page -->
+   <div class="page-container" id="impressionPage">
+    <section class="section">
+     <div class="section-container">
+      <h2 class="section-title" id="sectionTitleImpression">My Impression on Introduction to Calculus</h2>
+      <div class="impression-content">
+       <div class="impression-grid">
+        <div class="impression-card">
+         <h3><span class="math-icon">∫</span> Understanding Calculus</h3>
+         <p>Calculus opened my eyes to the mathematics of change and motion. Through derivatives, I learned to analyze instantaneous rates of change, understanding how things evolve moment by moment. Integrals revealed how to accumulate these tiny changes to find total quantities—like calculating areas, volumes, and accumulated distances. The beauty lies in how these two concepts are inverse operations, connected through the Fundamental Theorem of Calculus.</p>
+        </div>
+        <div class="impression-card">
+         <h3><span class="math-icon">⚙️</span> Importance for Engineering</h3>
+         <p>As an engineering student, I've come to realize that calculus is the language that describes our physical world. Whether it's analyzing electrical circuits, designing structural components, or optimizing systems, calculus provides the mathematical framework. From calculating forces and stresses to modeling dynamic systems and signal processing, every engineering discipline relies on calculus to transform theoretical concepts into practical solutions.</p>
+        </div>
+        <div class="impression-card">
+         <h3><span class="math-icon">📈</span> Growth & Confidence</h3>
+         <p>This course has significantly enhanced my mathematical reasoning and problem-solving confidence. Initially, concepts like limits and continuity seemed abstract, but through consistent practice and application, I developed an intuitive understanding. I've learned to approach complex problems systematically—breaking them down, identifying patterns, and applying appropriate techniques. This structured thinking has improved not just my calculus skills, but my overall analytical abilities.</p>
+        </div>
+        <div class="impression-card">
+         <h3><span class="math-icon">🌍</span> Real-World Connection</h3>
+         <p>A striking example of calculus in everyday life is GPS navigation. When your phone calculates the fastest route, it uses derivatives to analyze rate of change in traffic flow and integrals to compute total travel time over varying speeds. The position, velocity, and acceleration of your vehicle are all related through calculus—velocity is the derivative of position, and acceleration is the derivative of velocity. This mathematical relationship enables accurate real-time tracking and route optimization.</p>
+        </div>
+       </div>
+      </div>
+     </div>
+    </section>
+   </div>
+
+   <!-- Lab Assessments Page -->
+   <div class="page-container" id="labPage">
+    <section class="section">
+     <div class="section-container">
+      <h2 class="section-title" id="sectionTitleLab">Lab Assessments</h2>
+      <div class="lab-grid">
+       <div class="lab-card">
+        <h3>Lab 1: Limits and Continuity</h3>
+        <p>Exploration of limit concepts, evaluating limits graphically and algebraically, and understanding continuity at a point.</p>
+        <div class="upload-area" data-lab="lab1">
+         <input type="file" class="file-input" data-lab="lab1" multiple accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.txt">
+         <div class="upload-icon">📁</div>
+         <p>Click to Upload Lab 1 Files</p>
+         <p style="font-size: 0.85rem; opacity: 0.7;">PDF, DOC, Images, or Text files</p>
+         <div class="uploaded-files" id="lab1-files"></div>
+        </div>
+       </div>
+       <div class="lab-card">
+        <h3>Lab 2: Differentiation Techniques</h3>
+        <p>Practice with power rule, product rule, quotient rule, and chain rule. Application to finding tangent lines and rates of change.</p>
+        <div class="upload-area" data-lab="lab2">
+         <input type="file" class="file-input" data-lab="lab2" multiple accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.txt">
+         <div class="upload-icon">📁</div>
+         <p>Click to Upload Lab 2 Files</p>
+         <p style="font-size: 0.85rem; opacity: 0.7;">PDF, DOC, Images, or Text files</p>
+         <div class="uploaded-files" id="lab2-files"></div>
+        </div>
+       </div>
+       <div class="lab-card">
+        <h3>Lab 3: Applications of Derivatives</h3>
+        <p>Using derivatives to solve optimization problems, curve sketching, and analyzing motion problems with velocity and acceleration.</p>
+        <div class="upload-area" data-lab="lab3">
+         <input type="file" class="file-input" data-lab="lab3" multiple accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.txt">
+         <div class="upload-icon">📁</div>
+         <p>Click to Upload Lab 3 Files</p>
+         <p style="font-size: 0.85rem; opacity: 0.7;">PDF, DOC, Images, or Text files</p>
+         <div class="uploaded-files" id="lab3-files"></div>
+        </div>
+       </div>
+       <div class="lab-card">
+        <h3>Lab 4: Integration Fundamentals</h3>
+        <p>Introduction to antiderivatives and indefinite integrals. Practice with basic integration techniques and substitution method.</p>
+        <div class="upload-area" data-lab="lab4">
+         <input type="file" class="file-input" data-lab="lab4" multiple accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.txt">
+         <div class="upload-icon">📁</div>
+         <p>Click to Upload Lab 4 Files</p>
+         <p style="font-size: 0.85rem; opacity: 0.7;">PDF, DOC, Images, or Text files</p>
+         <div class="uploaded-files" id="lab4-files"></div>
+        </div>
+       </div>
+       <div class="lab-card">
+        <h3>Lab 5: Definite Integrals</h3>
+        <p>Computing definite integrals using the Fundamental Theorem of Calculus. Applications to area calculations and accumulation problems.</p>
+        <div class="upload-area" data-lab="lab5">
+         <input type="file" class="file-input" data-lab="lab5" multiple accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.txt">
+         <div class="upload-icon">📁</div>
+         <p>Click to Upload Lab 5 Files</p>
+         <p style="font-size: 0.85rem; opacity: 0.7;">PDF, DOC, Images, or Text files</p>
+         <div class="uploaded-files" id="lab5-files"></div>
+        </div>
+       </div>
+       <div class="lab-card">
+        <h3>Lab 6: Applications of Integration</h3>
+        <p>Solving real-world problems using integration—calculating volumes of revolution, work done by forces, and accumulated quantities.</p>
+        <div class="upload-area" data-lab="lab6">
+         <input type="file" class="file-input" data-lab="lab6" multiple accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.txt">
+         <div class="upload-icon">📁</div>
+         <p>Click to Upload Lab 6 Files</p>
+         <p style="font-size: 0.85rem; opacity: 0.7;">PDF, DOC, Images, or Text files</p>
+         <div class="uploaded-files" id="lab6-files"></div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </section>
+   </div>
+
+   <!-- Footer -->
+   <footer>
+    <p>Created by <span id="creatorName">Rohan Chivate</span> | Mathematics Portfolio 2025</p>
+   </footer>
+  </div>
+
+  <script>
+    // Navigation functionality
+    const menuToggle = document.getElementById('menuToggle');
+    const navMenu = document.getElementById('navMenu');
+    const navLinks = document.querySelectorAll('.nav-link');
+    const pages = document.querySelectorAll('.page-container');
+
+    menuToggle.addEventListener('click', (e) => {
+      e.preventDefault();
+      navMenu.classList.toggle('active');
+    });
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetPage = link.getAttribute('data-page');
+        
+        // Update active nav link
+        navLinks.forEach(l => l.classList.remove('active'));
+        link.classList.add('active');
+        
+        // Show target page
+        pages.forEach(page => page.classList.remove('active'));
+        document.getElementById(`${targetPage}Page`).classList.add('active');
+        
+        // Close mobile menu
+        navMenu.classList.remove('active');
+        
+        // Scroll to top
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    });
+
+    // File Upload Functionality
+    function formatFileSize(bytes) {
+      if (bytes === 0) return '0 Bytes';
+      const k = 1024;
+      const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+      const i = Math.floor(Math.log(bytes) / Math.log(k));
+      return Math.round(bytes / Math.pow(k, i) * 100) / 100 + ' ' + sizes[i];
+    }
+
+    function getFileIcon(fileName) {
+      const ext = fileName.split('.').pop().toLowerCase();
+      if (['jpg', 'jpeg', 'png', 'gif', 'webp'].includes(ext)) return '🖼️';
+      if (['pdf'].includes(ext)) return '📄';
+      if (['doc', 'docx'].includes(ext)) return '📝';
+      if (['txt'].includes(ext)) return '📃';
+      return '📎';
+    }
+
+    function loadFilesFromStorage() {
+      for (let i = 1; i <= 6; i++) {
+        const labId = `lab${i}`;
+        const stored = localStorage.getItem(`labFiles_${labId}`);
+        if (stored) {
+          try {
+            const files = JSON.parse(stored);
+            displayFiles(labId, files);
+          } catch (e) {
+            console.error('Error loading files:', e);
+          }
+        }
+      }
+    }
+
+    function saveFilesToStorage(labId, files) {
+      localStorage.setItem(`labFiles_${labId}`, JSON.stringify(files));
+    }
+
+    function displayFiles(labId, files) {
+      const container = document.getElementById(`${labId}-files`);
+      if (!container) return;
+
+      if (files.length === 0) {
+        container.classList.remove('has-files');
+        container.innerHTML = '';
+        return;
+      }
+
+      container.classList.add('has-files');
+      container.innerHTML = files.map((file, index) => {
+        const escapedName = file.name.replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+        return `
+          <div class="file-item">
+            <div class="file-info">
+              <span>${getFileIcon(file.name)}</span>
+              <div style="flex: 1; min-width: 0;">
+                <div class="file-name" title="${escapedName}">${file.name}</div>
+                <div class="file-size">${formatFileSize(file.size)}</div>
+              </div>
+            </div>
+            <div class="file-actions">
+              <button class="file-btn" data-action="view" data-lab="${labId}" data-index="${index}">View</button>
+              <button class="file-btn remove" data-action="remove" data-lab="${labId}" data-index="${index}">Remove</button>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      // Add event listeners to buttons using event delegation
+      container.querySelectorAll('.file-btn').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          const action = this.getAttribute('data-action');
+          const lab = this.getAttribute('data-lab');
+          const idx = parseInt(this.getAttribute('data-index'));
+          if (action === 'view') {
+            window.viewFile(lab, idx);
+          } else if (action === 'remove') {
+            window.removeFile(lab, idx);
+          }
+        });
+      });
+    }
+
+    window.viewFile = function(labId, index) {
+      const stored = localStorage.getItem(`labFiles_${labId}`);
+      if (!stored) return;
+      
+      const files = JSON.parse(stored);
+      const file = files[index];
+      if (!file) return;
+
+      // Create object URL from base64 data
+      const byteCharacters = atob(file.data.split(',')[1]);
+      const byteNumbers = new Array(byteCharacters.length);
+      for (let i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i);
+      }
+      const byteArray = new Uint8Array(byteNumbers);
+      const blob = new Blob([byteArray], { type: file.type });
+      const url = URL.createObjectURL(blob);
+      
+      // Open in new tab
+      window.open(url, '_blank');
+    };
+
+    window.removeFile = function(labId, index) {
+      const stored = localStorage.getItem(`labFiles_${labId}`);
+      if (!stored) return;
+      
+      const files = JSON.parse(stored);
+      files.splice(index, 1);
+      saveFilesToStorage(labId, files);
+      displayFiles(labId, files);
+    };
+
+    // Initialize file inputs
+    document.querySelectorAll('.file-input').forEach(input => {
+      input.addEventListener('change', function(e) {
+        const labId = this.getAttribute('data-lab');
+        const files = Array.from(e.target.files);
+        
+        if (files.length === 0) return;
+
+        // Load existing files
+        const stored = localStorage.getItem(`labFiles_${labId}`);
+        let existingFiles = stored ? JSON.parse(stored) : [];
+
+        // Convert new files to base64 and add to existing files
+        files.forEach(file => {
+          const reader = new FileReader();
+          reader.onload = function(e) {
+            existingFiles.push({
+              name: file.name,
+              size: file.size,
+              type: file.type,
+              data: e.target.result
+            });
+            saveFilesToStorage(labId, existingFiles);
+            displayFiles(labId, existingFiles);
+          };
+          reader.readAsDataURL(file);
+        });
+
+        // Reset input
+        e.target.value = '';
+      });
+    });
+
+    // Load files on page load
+    loadFilesFromStorage();
+  </script>
+ </body>
+</html>
+
